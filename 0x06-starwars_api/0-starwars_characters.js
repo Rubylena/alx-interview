@@ -6,7 +6,7 @@ const request = require('request');
 const movieId = process.argv[2];
 
 // Make a GET request to the Star Wars API to retrieve the movie information
-request(`https://swapi.dev/api/films/${movieId}/`, (error, response, body) => {
+request(`https://swapi-api.hbtn.io/api/films/${movieId}/`, (error, response, body) => {
   if (error) {
     console.error('Error making request:', error);
     return;
