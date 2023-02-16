@@ -2,6 +2,7 @@
 
 import sys
 
+
 def nqueens(n):
     def is_valid(board, row, col):
         # check the column
