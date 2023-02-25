@@ -17,9 +17,9 @@ def makeChange(coins, total):
     coins.sort(reverse=True)
 
     for coin in coins:
-        if (total < 1):
+        if (total < coin):
             pass
-        q, r = divmod(total, 1)
+        q, r = divmod(total, coin)
         total = r
         sum += q
 
