@@ -1,50 +1,39 @@
 #!/usr/bin/python3
-''' Prime Game Center'''
+"""
+Contains isPrime and isWinner Functions
+"""
+
+
+def isPrime(n):
+    """
+    Returns prime numbers between 1 and n
+    (sieve of Eratosthenes)
+    """
+    primeNums = []
+    sieve = [True] * (n + 1)
+    for num in range(2, n + 1):
+        if sieve[num]:
+            primeNums.append(num)
+            for i in range(num, n + 1, num):
+                sieve[i] = False
+    return primeNums
 
 
 def isWinner(x, nums):
-    ''' function to check the winner '''
-
-    winner_count = {"Maria": 0, "Ben": 0}
-
-    for n in nums:
-        primes = sieve(n)
-        if not primes:
-            # No primes to choose from, Ben wins
-            winner_count["Ben"] += 1
-        else:
-            winner = playGame(primes, "Maria", "Ben")
-            winner_count[winner] += 1
-
-    if winner_count["Maria"] == winner_count["Ben"]:
+    """Function to determine winner of Prime game"""
+    if x is None or nums is None or x == 0 or nums == []:
         return None
-    elif winner_count["Maria"] > winner_count["Ben"]:
+    mariaCount = 0
+    benCount = 0
+    for n in range(x):
+        primeNums = isPrime(nums[n])
+        if len(primeNums) % 2 != 0:
+            mariaCount += 1
+        else:
+            benCount += 1
+    if mariaCount > benCount:
         return "Maria"
-    else:
+    elif benCount > mariaCount:
         return "Ben"
-
-
-def sieve(n):
-    ''' Returns a list of prime numbers up to n '''
-    primes = [True] * (n+1)
-    primes[0] = primes[1] = False
-    for i in range(2, int(n**0.5)+1):
-        if primes[i]:
-            for j in range(i*i, n+1, i):
-                primes[j] = False
-    return [i for i in range(2, n+1) if primes[i]]
-
-
-def playGame(primes, player1, player2):
-    ''' Simulates the game and returns the winner '''
-
-    nums = set(range(1, primes[-1]+1))
-    while nums:
-        for player in [player1, player2]:
-            choices = [p for p in primes if p in nums]
-            if not choices:
-                return player2 if player == player1 else player1
-            chosen = max(choices)
-            nums -= set(range(chosen, primes[-1]+1, chosen))
-
-    return player2 if player == player1 else player1
+    else:
+        return None
