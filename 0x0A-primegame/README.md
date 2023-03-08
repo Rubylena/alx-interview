@@ -29,12 +29,14 @@ Ben wins because there are no prime numbers for Maria to choose
 Result: Ben has the most wins
 
 Explanation:
-To solve this problem, we can use the Sieve of Eratosthenes algorithm to generate a list of prime numbers up to n for each round. Then, we can simulate the game by having the players take turns choosing prime numbers and removing their multiples from the list. We can keep track of which player wins each round and return the player that wins the most rounds.
+The script defines two functions, isPrime(n) and isWinner(x, nums).
 
-The isWinner function takes the number of rounds x and an array of integers nums as input, where each integer represents the upper limit of the consecutive set of integers for a round. The function first initializes a dictionary winner_count to keep track of how many rounds each player wins. It then loops through each integer n in nums, generates a list of prime numbers up to n using the sieve function, and simulates the game using the playGame function. If there are no prime numbers to choose from, Ben wins by default.
+isPrime(n) is a function that returns a list of prime numbers between 1 and n. The function uses the sieve of Eratosthenes algorithm to find prime numbers. The function creates a list called sieve with n+1 elements, and sets each element to True. The loop iterates from 2 to n, and for each number num, if sieve[num] is True, the number is added to the primeNums list, and all multiples of num up to n are marked as composite (not prime) by setting their corresponding element in the sieve list to False. Finally, the function returns the list of prime numbers primeNums.
 
-The sieve function uses the Sieve of Eratosthenes algorithm to generate a list of prime numbers up to n. It returns a list of all the prime numbers in that range.
+isWinner(x, nums) is a function that determines the winner of a game based on a list of integers nums and a parameter x. The game involves finding prime numbers in each integer in the nums list up to the index x-1, and assigning a point to the player based on whether the number of prime numbers in the integer is odd or even. If the number of prime numbers is odd, the point goes to player Maria, otherwise it goes to player Ben. The function returns the name of the winner (either "Maria" or "Ben"), or None if the inputs are invalid.
 
-The playGame function takes a list of prime numbers primes and the names of two players player1 and player2 as input. It simulates the game by first initializing a set nums of all the integers from 1 up to and including the largest prime number in primes. It then alternates between the two players, allowing each player to choose a prime number from primes that is still in nums and removing its multiples from nums. The function returns the name of the player that cannot make a move, i.e., the player that is left with no prime numbers to choose from.
+The function first checks if the input parameters are None, if x is equal to 0, or if nums is an empty list. If any of these conditions are true, the function returns None.
 
-Finally, the isWinner function compares the number of rounds each player wins in winner_count and
+The function then initializes variables mariaCount and benCount to 0. The function then iterates through the first x elements of the nums list using a for loop. For each element in nums, the function calls isPrime(n) to get the list of prime numbers in that element, and determines if the number of prime numbers in that element is odd or even. If the number of prime numbers is odd, mariaCount is incremented, otherwise benCount is incremented.
+
+Finally, the function compares the mariaCount and benCount variables, and returns the name of the winner based on who has the higher count, or None if the counts are equal.
